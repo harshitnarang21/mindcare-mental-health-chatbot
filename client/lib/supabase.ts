@@ -1,11 +1,14 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js'
 
-const url = import.meta.env.VITE_SUPABASE_URL as string;
-const anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-export const supabase = createClient(url, anon, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-  },
-});
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables')
+}
+
+// ✅ EXPORT the supabase client (this was probably missing)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+// If you also need a default export
+export default supabase
