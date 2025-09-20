@@ -1,101 +1,73 @@
-import express from 'express';
-import serverless from 'serverless-http';
-import cors from 'cors';
+import type { Handler } from '@netlify/functions'
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-// Local fallback responses function
-function localRespond(userText) {
-  const t = userText.toLowerCase();
-  if (/suicid|self\s*harm|kill\s*myself|end\s*my\s*life/.test(t)) {
-    return "I'm really sorry you're feeling this way. Please contact your local emergency number immediately. You're not alone. 🆘";
-  }
-  if (/(anx|worry|panic)/.test(t)) {
-    return "For anxiety: Try the 4-7-8 breathing technique. Practice 5-4-3-2-1 grounding. 🧘‍♀️";
-  }
-  if (/(stress|burnout|overwhelm)/.test(t)) {
-    return "For stress: Break tasks into smaller pieces, use Pomodoro technique, prioritize your top 3 tasks. 🌟";
-  }
-  return "Thank you for sharing. Try taking 3 deep breaths right now. You deserve support. 💚";
-}
-
-// AI Chat endpoint
-app.post('/ai-chat', async (req, res) => {
-  console.log('🚀 Netlify Function: AI Chat called');
+const handler: Handler = async (event, context) => {
+  console.log('🚀 Function called:', event.httpMethod, event.path);
   
-  try {
-    const { messages } = req.body;
-    const userMessage = messages[messages.length - 1]?.text || '';
+  // CORS headers
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Content-Type': 'application/json'
+  };
+
+  // Handle preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
+  // Simple test - always works
+  if (event.httpMethod === 'GET') {
+    console.log('✅ GET request - returning test response');
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ 
+        message: 'Function works!',
+        timestamp: new Date().toISOString(),
+        method: event.httpMethod,
+        path: event.path
+      })
+    };
+  }
+
+  // Handle POST to ai-chat
+  if (event.httpMethod === 'POST') {
+    console.log('📨 POST request received');
     
-    console.log('👤 User message:', userMessage.substring(0, 50));
-    
-    // Check for API key
-    if (!process.env.GROQ_API_KEY) {
-      console.log('❌ No GROQ_API_KEY');
-      return res.json({ text: localRespond(userMessage) });
-    }
-    
-    console.log('📤 Calling Groq API...');
-    
-    // Call Groq with timeout protection
-    const response = await Promise.race([
-      fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [
-            {
-              role: 'system',
-              content: 'You are a compassionate mental health assistant. Provide supportive responses under 80 words.'
-            },
-            { role: 'user', content: userMessage }
-          ],
-          max_tokens: 100,
-          temperature: 0.7
-        })
-      }),
-      // 8 second timeout (before Netlify's 10s limit)
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Groq API timeout')), 8000)
-      )
-    ]);
-    
-    console.log('📥 Groq response status:', response.status);
-    
-    if (response.ok) {
-      const data = await response.json();
-      const aiResponse = data.choices[0]?.message?.content?.trim() || '';
+    try {
+      // Simple fallback response (no external API calls)
+      const body = event.body ? JSON.parse(event.body) : {};
+      const messages = body.messages || [];
+      const lastMessage = messages[messages.length - 1]?.text || 'hello';
       
-      if (aiResponse) {
-        console.log('✅ Groq success');
-        return res.json({ text: aiResponse });
-      }
+      console.log('💬 User message:', lastMessage);
+      
+      // Simple response without external APIs
+      const response = "I'm here to support you. Take a deep breath. You're doing great by reaching out. 💚";
+      
+      console.log('✅ Sending simple response');
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ text: response })
+      };
+      
+    } catch (error: any) {
+      console.error('❌ Error:', error.message);
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ text: 'I understand you need support. Take 3 deep breaths. 💙' })
+      };
     }
-    
-    console.log('❌ Groq failed, using fallback');
-    
-  } catch (error) {
-    console.error('❌ Function error:', error.message);
   }
-  
-  // Always return something (prevents empty response 502)
-  return res.json({ text: localRespond(req.body?.messages?.[0]?.text || 'Hello') });
-});
 
-// Test endpoint
-app.get('/test', (req, res) => {
-  res.json({ 
-    message: 'Netlify Functions working!', 
-    timestamp: new Date().toISOString(),
-    groqKeyExists: !!process.env.GROQ_API_KEY
-  });
-});
+  return {
+    statusCode: 404,
+    headers,
+    body: JSON.stringify({ error: 'Not found' })
+  };
+};
 
-// ✅ CORRECT export format for Netlify
-export const handler = serverless(app);
+export { handler };
