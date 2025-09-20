@@ -16,6 +16,21 @@ const seed: Msg[] = [
   { id: "a0", role: "assistant", text: "Hi, I'm your AI First‑Aid. I can offer short coping strategies and point you to help. If this is an emergency, call your local emergency number immediately." },
 ];
 
+// ✅ FIXED: Environment-aware API endpoint
+const getApiEndpoint = () => {
+  if (typeof window !== 'undefined') {
+    // Check if we're on localhost (development)
+    const isLocal = window.location.hostname === 'localhost' || 
+                   window.location.hostname === '127.0.0.1' ||
+                   window.location.hostname.includes('localhost');
+    
+    return isLocal 
+      ? '/api/ai-chat'  // Local development
+      : '/.netlify/functions/api/ai-chat';  // Production on Netlify
+  }
+  return '/api/ai-chat';  // Fallback for SSR
+};
+
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -64,7 +79,11 @@ export default function ChatWidget() {
     setIsLoading(true);
 
     try {
-      const resp = await fetch("/api/ai-chat", {
+      // ✅ FIXED: Use environment-aware API endpoint
+      const apiEndpoint = getApiEndpoint();
+      console.log('🔗 Using API endpoint:', apiEndpoint); // Debug log
+      
+      const resp = await fetch(apiEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: [...messages, u].slice(-8) }),
@@ -83,8 +102,11 @@ export default function ChatWidget() {
         text: textResp 
       };
       setMessages((m) => [...m, a]);
+      
+      console.log('✅ AI Response received:', textResp.substring(0, 50) + '...'); // Debug log
+      
     } catch (error) {
-      console.error('Chat API Error:', error);
+      console.error('❌ Chat API Error:', error);
       const fallbackResponse = localRespond(value);
       const a: Msg = { 
         id: crypto.randomUUID(), 
