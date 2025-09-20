@@ -1,8 +1,7 @@
-# netlify.toml
 [build]
   command = "npm run build"
   functions = "netlify/functions"
-  publish = "dist"
+  publish = "dist/spa"
 
 [functions]
   external_node_modules = ["express"]
