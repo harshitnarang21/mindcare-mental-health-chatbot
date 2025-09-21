@@ -1,159 +1,209 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SelfAssessmentPHQ9 from "@/components/SelfAssessmentPHQ9";
-import { HeartPulse, MessagesSquare, BookOpen, Users, BarChart3, Languages } from "lucide-react";
+import { HeartPulse, MessagesSquare, BookOpen, Users, BarChart3, Languages, Sparkles, Crown, Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Index() {
+  const navigate = useNavigate();
+
+  const handleStartJourney = () => {
+    // Navigate to Shantah (your main wellness platform)
+    navigate('/shantah');
+  };
+
+  const handleExploreFeatures = () => {
+    // Navigate to Community page to explore features
+    navigate('/community');
+  };
+
   return (
-    <div className="bg-gradient-to-b from-background via-background to-background">
-      {/* Hero */}
-      <section className="relative border-b bg-[radial-gradient(60rem_30rem_at_top_right,theme(colors.teal.100)_0%,transparent_45%)] py-14 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <div>
-              <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-                Digital Mental Health & Psychological Support for Students
-              </h1>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Confidential, stigma‑free support tailored to your campus: AI first‑aid, self‑assessment, resources, peer support, and anonymized insights for administrators.
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      {/* Premium Background Effects - Applied throughout */}
+      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-yellow-500/5 to-orange-500/5"></div>
+      <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-orange-400/10 to-yellow-400/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-yellow-400/10 to-orange-400/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-orange-400/5 to-yellow-400/5 rounded-full blur-3xl"></div>
+
+      <div className="relative z-10">
+        {/* Premium Hero Section - KEEPING EXISTING */}
+        <section className="relative py-24 px-6 text-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
+          {/* Premium Background Effects */}
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-yellow-500/10 to-orange-500/10 animate-pulse"></div>
+          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-orange-400/20 to-yellow-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-br from-yellow-400/20 to-orange-400/20 rounded-full blur-3xl"></div>
+          
+          <div className="relative z-10 max-w-6xl mx-auto">
+            {/* Premium Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 border border-orange-400/30 rounded-full backdrop-blur-sm">
+              <Crown className="w-4 h-4 text-yellow-400" />
+              <span className="text-sm font-medium text-orange-200">India's Most Advanced Platform</span>
+              <Sparkles className="w-4 h-4 text-yellow-400" />
+            </div>
+
+            {/* Main Hero Title */}
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+                Mind
+              </span>
+              <span className="bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                Care
+              </span>
+            </h1>
+
+            {/* Premium Hero Tagline */}
+            <div className="mb-8 space-y-2">
+              <p className="text-xl md:text-2xl font-semibold text-gray-200 leading-relaxed max-w-4xl mx-auto">
+                India's First AI-Powered Mental Wellness Platform with 
               </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a href="/#self-check"><Button size="lg">Start Self‑Check</Button></a>
-                <a href="/#features"><Button size="lg" variant="outline">Explore Features</Button></a>
-              </div>
-              <div className="mt-4 text-xs text-muted-foreground">Culturally adaptive • Regional languages • Offline counsellor mapping</div>
+              <p className="text-xl md:text-2xl font-semibold bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                Ancient Wisdom & Modern Rewards
+              </p>
             </div>
-            <div className="relative">
-              <div className="rounded-xl border bg-card p-4 shadow-xl">
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  <Stat label="24/7 AI First‑Aid" value="Instant" />
-                  <Stat label="Confidential Bookings" value="On‑campus" />
-                  <Stat label="Resource Hub" value="Audio/Video" />
-                  <Stat label="Peer Forum" value="Moderated" />
-                  <Stat label="Admin Insights" value="Anonymous" />
-                  <Stat label="Languages" value="EN · HI +" />
+
+            {/* Premium Feature Highlights */}
+            <div className="flex flex-wrap justify-center gap-6 mb-12 text-gray-300">
+              <div className="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-full border border-gray-700/50 backdrop-blur-sm">
+                <Zap className="w-4 h-4 text-yellow-400" />
+                <span className="text-sm font-medium">Krishna's Time Machine</span>
+              </div>
+              <div className="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-full border border-gray-700/50 backdrop-blur-sm">
+                <MessagesSquare className="w-4 h-4 text-orange-400" />
+                <span className="text-sm font-medium">AI-Powered Therapy</span>
+              </div>
+              <div className="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-full border border-gray-700/50 backdrop-blur-sm">
+                <HeartPulse className="w-4 h-4 text-red-400" />
+                <span className="text-sm font-medium">Karma Rewards</span>
+              </div>
+            </div>
+
+            {/* Premium CTA Buttons - KEEPING FUNCTIONALITY */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button 
+                size="lg" 
+                onClick={handleStartJourney}
+                className="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white border-0 shadow-xl transform hover:scale-105 transition-all duration-200"
+              >
+                Start Your Journey
+                <Sparkles className="w-5 h-5 ml-2" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                onClick={handleExploreFeatures}
+                className="px-8 py-4 text-lg font-semibold bg-gray-800/80 border-2 border-orange-400/60 text-orange-200 hover:bg-orange-500/20 hover:border-orange-400 hover:text-white backdrop-blur-sm transition-all duration-200"
+              >
+                Explore Features
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Premium Features Section - UPDATED THEME */}
+        <section className="py-16 px-6 relative">
+          <div className="max-w-6xl mx-auto">
+            {/* Section Header */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 border border-orange-400/30 rounded-full backdrop-blur-sm">
+                <HeartPulse className="w-4 h-4 text-yellow-400" />
+                <span className="text-sm font-medium text-orange-200">Comprehensive Support</span>
+                <Sparkles className="w-4 h-4 text-yellow-400" />
+              </div>
+
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
+                <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+                  Mental Health
+                </span>
+                <span className="bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                  {' '}Ecosystem
+                </span>
+              </h2>
+              <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-2">
+                A structured, scalable support system designed for higher education.
+              </p>
+              <p className="text-sm text-orange-300">
+                Short, campus‑ready content you can localize for your students.
+              </p>
+            </div>
+
+            {/* Feature Cards - PREMIUM THEME */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {[
+                {
+                  icon: HeartPulse,
+                  title: "Stress Assessment",
+                  desc: "Real-time stress monitoring and personalized wellness recommendations",
+                  gradient: "from-red-400 to-pink-500"
+                },
+                {
+                  icon: MessagesSquare,
+                  title: "AI Therapy Chat",
+                  desc: "24/7 supportive conversations with our intelligent mental health assistant",
+                  gradient: "from-blue-400 to-purple-500"
+                },
+                {
+                  icon: BookOpen,
+                  title: "Wellness Resources",
+                  desc: "Curated mental health content and self-help materials",
+                  gradient: "from-green-400 to-teal-500"
+                },
+                {
+                  icon: Users,
+                  title: "Community Support",
+                  desc: "Connect with peers and share your journey in a safe environment",
+                  gradient: "from-purple-400 to-indigo-500"
+                },
+                {
+                  icon: BarChart3,
+                  title: "Progress Tracking",
+                  desc: "Monitor your mental health journey with detailed analytics",
+                  gradient: "from-yellow-400 to-orange-500"
+                },
+                {
+                  icon: Languages,
+                  title: "Multi-language",
+                  desc: "Support in multiple Indian languages for better accessibility",
+                  gradient: "from-cyan-400 to-blue-500"
+                }
+              ].map((feature, index) => (
+                <Card key={index} className="bg-gray-800/50 backdrop-blur-sm border-gray-700/50 shadow-xl hover:shadow-2xl hover:bg-gray-800/60 transition-all duration-300 group">
+                  <CardHeader className="text-center">
+                    <div className={`mx-auto w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-2xl group-hover:scale-110 transition-all duration-300`}>
+                      <feature.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <CardTitle className="text-xl font-semibold text-gray-200 group-hover:text-white transition-colors duration-300">
+                      {feature.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-gray-400 text-center group-hover:text-gray-300 transition-colors duration-300">
+                      {feature.desc}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* PHQ-9 Assessment Section - PREMIUM THEME */}
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 shadow-xl">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 border border-orange-400/30 rounded-full backdrop-blur-sm">
+                  <BarChart3 className="w-4 h-4 text-yellow-400" />
+                  <span className="text-sm font-medium text-orange-200">Mental Health Assessment</span>
+                  <Sparkles className="w-4 h-4 text-yellow-400" />
                 </div>
+                <h3 className="text-2xl font-bold text-gray-200 mb-2">
+                  Check Your Mental Wellness
+                </h3>
+                <p className="text-gray-400">
+                  Take our scientifically-backed assessment to understand your mental health status
+                </p>
               </div>
+              <SelfAssessmentPHQ9 />
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section id="features" className="scroll-mt-24 py-14">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-8 flex items-end justify-between gap-4">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight">What you can do</h2>
-              <p className="text-muted-foreground">A structured, scalable support system designed for higher education.</p>
-            </div>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Feature icon={<MessagesSquare className="h-5 w-5" />} title="AI‑guided First‑Aid" desc="Interactive chat suggests coping strategies and refers to professionals when needed." />
-            <Feature icon={<HeartPulse className="h-5 w-5" />} title="Confidential Booking" desc="Book appointments with on‑campus counsellors or request helpline callbacks." />
-            <Feature icon={<BookOpen className="h-5 w-5" />} title="Resource Hub" desc="Guides, videos, and relaxation audio in regional languages and campus context." />
-            <Feature icon={<Users className="h-5 w-5" />} title="Peer Support" desc="Moderated peer‑to‑peer forum led by trained student volunteers." />
-            <Feature icon={<BarChart3 className="h-5 w-5" />} title="Admin Dashboard" desc="Anonymous trends to plan interventions without exposing identities." />
-            <Feature icon={<Languages className="h-5 w-5" />} title="Cultural & Language Fit" desc="Adapt content to local context; add institute‑specific resources and helplines." />
-          </div>
-        </div>
-      </section>
-
-      {/* Self Assessment */}
-      <section className="py-14">
-        <div className="mx-auto max-w-4xl px-4">
-          <SelfAssessmentPHQ9 />
-        </div>
-      </section>
-
-      {/* Resources */}
-      <section id="resources" className="scroll-mt-24 border-t py-14">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold tracking-tight">Psychoeducational Resources</h2>
-            <p className="text-muted-foreground">Short, campus‑ready content you can localize for your students.</p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            <ResourceCard title="5‑Minute Breathing" type="Audio" lang="English / Hindi" desc="Guided 4‑7‑8 breathing to ease anxiety and prepare for sleep." />
-            <ResourceCard title="Study Stress 101" type="Video" lang="English" desc="Evidence‑based tips for exam planning and focus blocks." />
-            <ResourceCard title="Grounding Exercises" type="Guide" lang="English / Regional" desc="5‑4‑3‑2‑1 grounding and progressive muscle relaxation." />
-          </div>
-        </div>
-      </section>
-
-      {/* About / Admin Teaser */}
-      <section id="about" className="py-14">
-        <div className="mx-auto max-w-6xl px-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Why a Digital Platform for Psychological Support?</CardTitle>
-              <CardDescription>
-                Most apps are generic, Western‑oriented, or paid. EduMind is tailored for your institution with offline mapping to counsellors and real‑time anonymous analytics.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-6 md:grid-cols-2">
-              <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-                <li>Early detection and preventive tools (PHQ‑9 / GAD‑7 / GHQ)</li>
-                <li>Institution‑specific customization and languages</li>
-                <li>Stigma‑free access via AI first‑aid and peer support</li>
-                <li>Centralized monitoring and data‑driven policy planning</li>
-              </ul>
-              <div className="rounded-lg border p-4">
-                <div className="text-sm font-semibold">Admin Dashboard (preview)</div>
-                <div className="mt-2 text-sm text-muted-foreground">Anonymous weekly trends: mood, anxiety, sleep, bookings. Export for IQAC.</div>
-                <div className="mt-3 grid grid-cols-4 gap-2 text-xs">
-                  <div className="rounded-md bg-emerald-100 p-2 text-emerald-900 dark:bg-emerald-900/20 dark:text-emerald-200">Mood ↑</div>
-                  <div className="rounded-md bg-yellow-100 p-2 text-yellow-900 dark:bg-yellow-900/20 dark:text-yellow-200">Anxiety →</div>
-                  <div className="rounded-md bg-sky-100 p-2 text-sky-900 dark:bg-sky-900/20 dark:text-sky-200">Sleep ↓</div>
-                  <div className="rounded-md bg-indigo-100 p-2 text-indigo-900 dark:bg-indigo-900/20 dark:text-indigo-200">Bookings ↑</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg border bg-card p-3 text-center">
-      <div className="text-xs text-muted-foreground">{label}</div>
-      <div className="text-base font-semibold">{value}</div>
-    </div>
-  );
-}
-
-function Feature({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-xl">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-secondary text-primary">
-            {icon}
-          </span>
-          {title}
-        </CardTitle>
-        <CardDescription>{desc}</CardDescription>
-      </CardHeader>
-    </Card>
-  );
-}
-
-function ResourceCard({ title, type, lang, desc }: { title: string; type: string; lang: string; desc: string }) {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-xl">{title}</CardTitle>
-        <CardDescription>{type} • {lang}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-muted-foreground">{desc}</p>
-        <div className="mt-4">
-          <Button variant="secondary" size="sm">Open</Button>
-        </div>
-      </CardContent>
-    </Card>
   );
 }

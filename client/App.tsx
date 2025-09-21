@@ -12,6 +12,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import Community from "./pages/Community";
+import Shantah from './components/Shantah';
+import KarmaArena from './components/KarmaArena';
 
 const queryClient = new QueryClient();
 
@@ -31,6 +33,8 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/community" element={<Community />} />
+                <Route path="/shantah" element={<Shantah />} />
+                <Route path="/karma-arena" element={<KarmaArena />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

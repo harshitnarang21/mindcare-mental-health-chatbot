@@ -6,98 +6,340 @@
 @tailwind utilities;
 
 @layer base {
-  /**
-   * Tailwind CSS theme
-   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
-   * A different format will require also updating the theme in tailwind.config.ts.
-  */
   :root {
     --background: 210 30% 98%;
     --foreground: 222 47% 11%;
-
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-
     --primary: 226 70% 55%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 186 55% 92%;
     --secondary-foreground: 222 47% 13%;
-
     --muted: 220 14% 96%;
     --muted-foreground: 215 16% 46%;
-
     --accent: 186 65% 90%;
     --accent-foreground: 222 47% 13%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 220 14% 90%;
     --input: 220 14% 90%;
     --ring: 226 70% 55%;
-
     --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 226 70% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 186 55% 92%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
     --background: 224 71% 4%;
     --foreground: 210 40% 98%;
-
     --card: 224 71% 4%;
     --card-foreground: 210 40% 98%;
-
-    --popover: 224 71% 4%;
-    --popover-foreground: 210 40% 98%;
-
     --primary: 226 70% 65%;
     --primary-foreground: 222 47% 11%;
-
     --secondary: 210 20% 14%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 220 18% 12%;
     --muted-foreground: 215 20% 65%;
-
     --accent: 190 30% 18%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 220 10% 22%;
     --input: 220 10% 22%;
     --ring: 226 70% 65%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 226 70% 65%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* ========== MINDCARE APP STYLES ========== */
+.mindcare-app {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.app-header {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.app-header h1 {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.app-header p {
+  color: #718096;
+  font-size: 1.1rem;
+}
+
+.main-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card h3 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.quick-actions {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.quick-actions h3 {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.emergency-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.emergency-btn {
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.emergency-btn:hover {
+  transform: translateY(-2px);
+}
+
+.emergency-btn.crisis {
+  background: #fed7d7;
+  color: #c53030;
+}
+
+.emergency-btn.breathing {
+  background: #bee3f8;
+  color: #2b6cb0;
+}
+
+.emergency-btn.meditation {
+  background: #d6f5d6;
+  color: #276749;
+}
+
+.resource-btn, .book-btn, .peer-btn, .karma-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.resource-btn {
+  background: #edf2f7;
+  color: #4a5568;
+}
+
+.book-btn {
+  background: #4299e1;
+  color: white;
+}
+
+.peer-btn {
+  background: #38a169;
+  color: white;
+}
+
+.karma-btn {
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
+  color: white;
+  font-weight: 600;
+}
+
+.app-footer {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+
+.disclaimer {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+/* ========== SHANTAH & KARMA ARENA INTEGRATION STYLES ========== */
+.shantah-preview, .karma-preview {
+  text-align: center;
+}
+
+.shantah-visual, .karma-visual {
+  margin-bottom: 1rem;
+}
+
+.sanskrit-text {
+  font-size: 1.1rem;
+  color: #f6ad55;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.karma-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4299e1;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #a0aec0;
+}
+
+.preview-text {
+  font-size: 0.9rem;
+  color: #718096;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.launch-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.shantah-btn {
+  background: linear-gradient(45deg, #f6ad55, #ed8936);
+  color: white;
+}
+
+.shantah-btn:hover {
+  background: linear-gradient(45deg, #ed8936, #dd6b20);
+  transform: translateY(-2px);
+}
+
+.karma-btn {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+}
+
+.karma-btn:hover {
+  background: linear-gradient(45deg, #5a67d8, #6b46c1);
+  transform: translateY(-2px);
+}
+
+.fixed.inset-0 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .app-header {
+    padding: 1rem;
+  }
+  
+  .app-header h1 {
+    font-size: 2rem;
+  }
+  
+  .emergency-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .karma-stats {
+    gap: 1rem;
+  }
+  
+  .stat-value {
+    font-size: 1.2rem;
+  }
+  
+  .launch-btn {
+    font-size: 0.9rem;
   }
 }
