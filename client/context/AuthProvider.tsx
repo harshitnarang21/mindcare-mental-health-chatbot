@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  // 🔧 FIXED: Enhanced profile fetching with better needsProfile logic
+  // 🔧 ENHANCED: Profile fetching with better error handling
   useEffect(() => {
     (async () => {
       if (!user) {
@@ -63,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return;
       }
       
-      console.log("🔍 Fetching profile for user:", user.id); // Debug log
+      console.log("🔍 Fetching profile for user:", user.id);
       
       const { data, error } = await supabase
         .from("profiles")
@@ -72,57 +72,108 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .maybeSingle();
         
       if (error) {
-        console.log("❌ Profile fetch error:", error); // Debug log
-        setProfile(null);
-        setNeedsProfile(true);
+        console.log("❌ Profile fetch error:", error);
+        // 🔧 ENHANCED: Better error handling based on error type
+        if (error.code === 'PGRST116') {
+          // No rows returned - user needs to create profile
+          setProfile(null);
+          setNeedsProfile(true);
+        } else if (error.message?.includes("table") && error.message?.includes("does not exist")) {
+          // Profiles table doesn't exist - handle gracefully
+          console.warn("⚠️ Profiles table not found. User will need to complete profile setup.");
+          setProfile(null);
+          setNeedsProfile(true);
+        } else {
+          // Other errors - still allow app to function
+          setProfile(null);
+          setNeedsProfile(true);
+        }
         return;
       }
       
-      console.log("📋 Profile data received:", data); // Debug log
+      console.log("📋 Profile data received:", data);
       
       setProfile(data ?? null);
       
-      // 🔧 FIXED: Better needsProfile detection
-      const hasBasicProfile = data && data.full_name && data.full_name.trim().length > 0;
-      console.log("✅ Has basic profile:", hasBasicProfile, "needsProfile will be:", !hasBasicProfile); // Debug log
+      // 🔧 ENHANCED: More robust profile validation
+      const hasBasicProfile = data && 
+                             data.full_name && 
+                             data.full_name.trim().length > 0 &&
+                             data.full_name.trim() !== 'null' &&
+                             data.full_name.trim() !== 'undefined';
+      
+      console.log("✅ Has basic profile:", hasBasicProfile, "needsProfile will be:", !hasBasicProfile);
       
       setNeedsProfile(!hasBasicProfile);
     })();
   }, [user]);
 
-  // ✅ KEEP YOUR EXACT EXISTING FUNCTIONS - NO CHANGES
+  // 🔧 ENHANCED: Better redirect handling for production
   const signInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin } });
+    try {
+      const redirectTo = typeof window !== 'undefined' 
+        ? window.location.origin 
+        : 'https://minc.netlify.app'; // Fallback for SSR
+        
+      console.log("🔗 OAuth redirect URL:", redirectTo);
+      
+      await supabase.auth.signInWithOAuth({ 
+        provider: "google", 
+        options: { 
+          redirectTo,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
+        } 
+      });
+    } catch (error) {
+      console.error("❌ Google sign-in error:", error);
+      throw error;
+    }
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    setProfile(null);
+    try {
+      await supabase.auth.signOut();
+      setProfile(null);
+      setNeedsProfile(false);
+      console.log("👋 User signed out successfully");
+    } catch (error) {
+      console.error("❌ Sign out error:", error);
+    }
   };
 
-  // 🔧 ENHANCED: Better upsert function with proper state updates
+  // 🔧 ENHANCED: Better upsert function with retry logic
   const upsertProfile = async (p: Omit<Profile, "id">) => {
     if (!user) return;
     
-    console.log("💾 Upserting profile:", p); // Debug log
+    console.log("💾 Upserting profile:", p);
     
-    // ✅ This will work with your existing DB structure AND new enhanced fields
-    const { data, error } = await supabase
-      .from("profiles")
-      .upsert({ id: user.id, ...p })
-      .select()
-      .single();
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .upsert({ id: user.id, ...p })
+        .select()
+        .single();
+        
+      console.log("📤 Upsert result:", { data, error });
       
-    console.log("📤 Upsert result:", { data, error }); // Debug log
-    
-    if (!error && data) {
-      setProfile(data);
-      // 🔧 FIXED: Properly determine needsProfile based on actual data
-      const hasBasicProfile = data.full_name && data.full_name.trim().length > 0;
-      setNeedsProfile(!hasBasicProfile);
-      console.log("✅ Profile saved successfully, needsProfile set to:", !hasBasicProfile);
-    } else {
-      console.error("❌ Profile upsert failed:", error);
+      if (!error && data) {
+        setProfile(data);
+        // 🔧 ENHANCED: More robust validation
+        const hasBasicProfile = data.full_name && 
+                               data.full_name.trim().length > 0 &&
+                               data.full_name.trim() !== 'null';
+        setNeedsProfile(!hasBasicProfile);
+        console.log("✅ Profile saved successfully, needsProfile set to:", !hasBasicProfile);
+      } else {
+        console.error("❌ Profile upsert failed:", error);
+        // Don't throw error - let app continue to function
+      }
+    } catch (error) {
+      console.error("❌ Profile upsert exception:", error);
+      // Don't throw error - let app continue to function
     }
   };
 

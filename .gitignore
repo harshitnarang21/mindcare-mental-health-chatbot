@@ -31,3 +31,4 @@ Thumbs.db
 # Netlify
 .netlify/
 "@ | Out-File -FilePath ".gitignore" -Encoding UTF8
+.vercel
