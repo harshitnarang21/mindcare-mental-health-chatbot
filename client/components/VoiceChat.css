@@ -1,0 +1,105 @@
+.voice-chat-container {
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  margin: 20px 0;
+  border: 1px solid rgba(255, 193, 7, 0.2);
+}
+
+.voice-controls {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.voice-start-btn, .voice-stop-btn {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.voice-start-btn:hover, .voice-stop-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+}
+
+.voice-start-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.voice-stop-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.voice-status {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.listening-indicator {
+  font-size: 18px;
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.listening-indicator.active {
+  background: rgba(52, 152, 219, 0.3);
+  animation: pulse 1.5s infinite;
+  border: 1px solid rgba(52, 152, 219, 0.5);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.transcript, .ai-response {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+  color: #ffffff;
+  border-left: 3px solid #ffc107;
+}
+
+.ai-response {
+  border-left-color: #28a745;
+}
+
+.ai-thinking {
+  text-align: center;
+  color: #ffc107;
+  font-style: italic;
+  animation: thinking 1.5s infinite;
+  padding: 10px;
+}
+
+@keyframes thinking {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.voice-chat-error {
+  background: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  color: #dc3545;
+}
